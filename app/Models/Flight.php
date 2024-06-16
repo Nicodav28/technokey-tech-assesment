@@ -41,4 +41,42 @@ class Flight
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function getFlight($id)
+    {
+        $query = 'SELECT * FROM flights WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch();
+    }
+
+    public function createFlight($data)
+    {
+        $query = 'INSERT INTO flights (date, type, cost) VALUES (:date, :type, :cost)';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':date', $data['date']);
+        $stmt->bindParam(':type', $data['type']);
+        $stmt->bindParam(':cost', $data['cost']);
+        return $stmt->execute();
+    }
+
+    public function updateFlight($id, $data)
+    {
+        $query = 'UPDATE flights SET date = :date, type = :type, cost = :cost WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':date', $data['date']);
+        $stmt->bindParam(':type', $data['type']);
+        $stmt->bindParam(':cost', $data['cost']);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function deleteFlight($id)
+    {
+        $query = 'DELETE FROM flights WHERE id = :id';
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 }
