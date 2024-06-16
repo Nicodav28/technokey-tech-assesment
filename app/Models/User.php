@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Helpers\DB;
+use PDO;
 
 class User
 {
@@ -10,19 +11,20 @@ class User
 
     public function __construct()
     {
-        $this->db = DB::getInstance()->getConnection();
+        $this->db = DB::getInstance();
     }
 
-    public function find($username)
+    public function find($email)
     {
-        $stmt = $this->db->prepare('SELECT * FROM users WHERE username = :username');
-        $stmt->execute(['username' => $username]);
-        return $stmt->fetch();
+        $stmt = $this->db->prepare('SELECT * FROM usuarios WHERE email = :email');
+        $stmt->execute([':email' => $email]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function create($username, $password)
+    public function create($data)
     {
-        $stmt = $this->db->prepare('INSERT INTO users (username, password) VALUES (:username, :password)');
-        return $stmt->execute(['username' => $username, 'password' => password_hash($password, PASSWORD_BCRYPT)]);
+        $hashedPassword = password_hash($data['contrasena'], PASSWORD_BCRYPT);
+        $stmt = $this->db->prepare('INSERT INTO usuarios (nombre, email,contrasena) VALUES (:name, :email, :password)');
+        return $stmt->execute([':name' => $data['nombre'], ':password' => $hashedPassword, ':email' => $data['email']]);
     }
 }

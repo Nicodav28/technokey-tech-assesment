@@ -9,6 +9,16 @@ $router->get('/login', function () {
     $authController->login();
 });
 
+$router->post('/login', function () {
+    $authController = new AuthController();
+    $authController->login();
+});
+
+$router->get('/logout', function () {
+    $authController = new AuthController();
+    $authController->logout();
+});
+
 $router->get('/register', function () {
     $authController = new AuthController();
     $authController->register($_POST);
@@ -18,13 +28,6 @@ $router->post('/register', function () {
     $authController = new AuthController();
     $authController->register($_POST);
 });
-
-$router->post('/login', function () {
-    $authController = new AuthController();
-    $authController->login();
-});
-
-$router->get('/logout', [AuthController::class, 'logout']);
 
 $router->get('/', function () {
     $flightController = new FlightController(new Flight());

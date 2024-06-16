@@ -11,12 +11,12 @@ class Flight
 
     public function __construct()
     {
-        $this->db = DB::getInstance()->getConnection();
+        $this->db = DB::getInstance();
     }
 
     public function getFlights($filters = [], $sort = 'id', $order = 'ASC', $limit = 10, $offset = 0)
     {
-        $query = 'SELECT * FROM flights WHERE 1=1';
+        $query = 'SELECT * FROM vuelos WHERE 1=1';
         $params = [];
 
         if (!empty($filters['date'])) {
@@ -39,31 +39,36 @@ class Flight
         }
 
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getFlight($id)
     {
-        $query = 'SELECT * FROM flights WHERE id = :id';
+        $query = 'SELECT * FROM vuelos WHERE id = :id';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetch();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function createFlight($data)
     {
-        $query = 'INSERT INTO flights (date, type, cost) VALUES (:date, :type, :cost)';
+        $query = 'INSERT INTO vuelos (codigo_avion, fecha, hora, costo, destino, tipo) VALUES (:planeCode, :flightDate, :hour, :cost, :destination, :type)';
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':date', $data['date']);
-        $stmt->bindParam(':type', $data['type']);
-        $stmt->bindParam(':cost', $data['cost']);
+        $stmt->bindParam(':planeCode', $data['codigo_avion']);
+        $stmt->bindParam(':flightDate', $data['fecha']);
+        $stmt->bindParam(':hour', $data['hora']);
+        $stmt->bindParam(':cost', $data['costo'], PDO::PARAM_STR);  // Forzando a que 'costo' se trate como una cadena para precisión decimal
+        $stmt->bindParam(':destination', $data['destino']);
+        $stmt->bindParam(':type', $data['tipo'], PDO::PARAM_INT);  // Forzando a que 'tipo' se trate como un entero
+
         return $stmt->execute();
     }
 
+
     public function updateFlight($id, $data)
     {
-        $query = 'UPDATE flights SET date = :date, type = :type, cost = :cost WHERE id = :id';
+        $query = 'UPDATE vuelos SET date = :date, type = :type, cost = :cost WHERE id = :id';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':date', $data['date']);
         $stmt->bindParam(':type', $data['type']);
@@ -74,7 +79,7 @@ class Flight
 
     public function deleteFlight($id)
     {
-        $query = 'DELETE FROM flights WHERE id = :id';
+        $query = 'DELETE FROM vuelos WHERE id = :id';
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();

@@ -1,17 +1,115 @@
-<?php include __DIR__ . '/partials/header.php'; ?>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-<form method="post" action="/login">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
+    .form-container {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+        /* Añadido para separación del header */
+    }
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+    .login-form {
+        width: 100%;
+    }
 
-    <button type="submit">Login</button>
+    .form-group {
+        margin-bottom: 15px;
+    }
 
-    <?php if (isset($error)) : ?>
-        <p><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
-    <?php endif; ?>
-</form>
+    label {
+        font-weight: bold;
+    }
 
-<?php include __DIR__ . '/partials/footer.php'; ?>
+    input[type="text"],
+    input[type="password"] {
+        width: calc(100% - 20px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-top: 10px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    .error {
+        color: #ff0000;
+        margin-top: 10px;
+    }
+
+    .register-container {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .register-link {
+        display: inline-block;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 4px;
+    }
+
+    .register-link:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="form-container">
+    <form method="post" action="/login" class="login-form">
+        <h2>Login</h2>
+
+        <div class="form-group">
+            <label for="email">email:</label>
+            <input type="text" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <button type="submit">Login</button>
+
+        <?php if (isset($error)) : ?>
+            <p class="error"><?php echo htmlspecialchars($error, ENT_QUOTES, 'UTF-8'); ?></p>
+        <?php endif; ?>
+    </form>
+
+    <div class="register-container">
+        <h2>Register</h2>
+        <p>Don't have an account? Register now!</p>
+        <a href="/register" class="register-link">Register</a>
+    </div>
+</div>

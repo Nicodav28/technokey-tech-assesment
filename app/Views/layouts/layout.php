@@ -19,9 +19,9 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                     <div class="navbar-nav">
-                        <a class="nav-link active" aria-current="page" href="#">Flights</a>
+                        <a class="nav-link active" aria-current="page" href="">Flights</a>
                         <div class="d-flex ">
-                            <a class="nav-link" href="#">Logout</a>
+                            <a class="nav-link" href="/logout">Logout</a>
                         </div>
 
                     </div>

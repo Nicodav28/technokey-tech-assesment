@@ -6,8 +6,13 @@ class View
 {
     public static function render($view, $data = [])
     {
-        print_r("sdas");
-        extract($data);
-        include_once __DIR__ . '/../Views/' . $view . '.php';
+        if ($view != 'login' && $view != 'register') {
+            $data['view'] = $view;
+            extract($data);
+            include_once __DIR__ . '/../Views/layouts/layout.php';
+        } else {
+            extract($data);
+            include_once __DIR__ . '/../Views/' .  $view . '.php';
+        }
     }
 }

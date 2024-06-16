@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 
+use Exception;
 use PDO;
 use PDOException;
 use PDOStatement;
@@ -13,16 +14,16 @@ class DB
 
     private function __construct()
     {
-        $config = include __DIR__ . '/../../config/database.php';
-
-        $dsn = "pgsql:host={$config['host']};port={$config['port']};dbname={$config['database']};";
+        $dsn = "pgsql:host=localhost;port=5432;dbname=technokey_asses";
+        $username = 'postgres';
+        $password = '0000';
 
         try {
-            $this->connection = new PDO($dsn, $config['username'], $config['password']);
+            $this->connection = new PDO($dsn, $username, $password);
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
-            die('Database connection failed: ' . $e->getMessage());
+            print_r('Database connection failed: ' . $e->getMessage());
+            die();
         }
     }
 
@@ -39,7 +40,6 @@ class DB
         return $this->connection;
     }
 
-    // Método opcional para ejecutar consultas preparadas
     public function prepare(string $sql): PDOStatement
     {
         return $this->connection->prepare($sql);
