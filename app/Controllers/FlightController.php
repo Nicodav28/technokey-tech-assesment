@@ -37,40 +37,44 @@ class FlightController
     public function show($id)
     {
         $flight = $this->flight->getFlight($id);
-        // Mostrar la vista con los datos del vuelo $flight
+
+        // TODO: Redirigir y/o mostrar mensajes de resultado
         View::render('flight', ['flight' => $flight]);
     }
 
-    public function store()
+    public function store(array $params)
     {
         $data = [
-            'date' => $_POST['date'],
-            'type' => $_POST['type'],
-            'cost' => $_POST['cost'],
+            'date' => $params['date'],
+            'type' => $params['type'],
+            'cost' => $params['cost'],
         ];
 
         $result = $this->flight->createFlight($data);
-        // Redirigir o mostrar mensajes según el resultado
+
+        // TODO: Redirigir y/o mostrar mensajes de resultado
         View::render('flight', ['flight' => $result]);
     }
 
-    public function update($id)
+    public function update($id, $params)
     {
         $data = [
-            'date' => $_POST['date'],
-            'type' => $_POST['type'],
-            'cost' => $_POST['cost'],
+            'date' => $params['date'],
+            'type' => $params['type'],
+            'cost' => $params['cost'],
         ];
 
         $result = $this->flight->updateFlight($id, $data);
-        // Redirigir o mostrar mensajes según el resultado
+
+        // TODO: Redirigir y/o mostrar mensajes de resultado
         View::render('flight', ['flight' => $result]);
     }
 
     public function destroy($id)
     {
         $result = $this->flight->deleteFlight($id);
-        // Redirigir o mostrar mensajes según el resultado
+
+        // TODO: Redirigir y/o mostrar mensajes de resultado
         View::render('flight', ['flight' => $result]);
     }
 }
