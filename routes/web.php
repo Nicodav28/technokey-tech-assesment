@@ -16,22 +16,28 @@ $router->post('/login', function () {
 
 $router->get('/logout', [AuthController::class, 'logout']);
 
-$router->get('/flights/{id}', function ($id) {
+$router->get('/', function () {
+    $flightController = new FlightController(new Flight());
+    $flightController->index();
+});
+
+
+$router->get('/{id}', function ($id) {
     $flightController = new FlightController(new Flight());
     $flightController->show($id);
 });
 
-$router->post('/flights', function () {
+$router->post('/', function () {
     $flightController = new FlightController(new Flight());
     $flightController->store($_POST);
 });
 
-$router->put('/flights/{id}', function ($id) {
+$router->put('/{id}', function ($id) {
     $flightController = new FlightController(new Flight());
     $flightController->update($id, $_POST);
 });
 
-$router->delete('/flights/{id}', function ($id) {
+$router->delete('/{id}', function ($id) {
     $flightController = new FlightController(new Flight());
     $flightController->destroy($id);
 });
