@@ -12,5 +12,5 @@ SanitizeMiddleware::handle();
 $router = new \Bramus\Router\Router();
 
 require_once './routes/web.php';
-phpinfo();
+
 $router->run();

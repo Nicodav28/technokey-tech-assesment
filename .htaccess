@@ -1,9 +1,7 @@
-DirectoryIndex index.php
-
-RewriteEngine on
+RewriteEngine On
 RewriteBase /
 
-RewriteCond %{REQUEST_FILENAME} !-f
+# Redirigir todas las peticiones al archivo public/index.php
 RewriteCond %{REQUEST_FILENAME} !-d
- 
-RewriteRule ^(.*)$ public/index.php [QSA]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php/$1 [L]
