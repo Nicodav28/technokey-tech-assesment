@@ -9,6 +9,16 @@ $router->get('/login', function () {
     $authController->login();
 });
 
+$router->get('/register', function () {
+    $authController = new AuthController();
+    $authController->register($_POST);
+});
+
+$router->post('/register', function () {
+    $authController = new AuthController();
+    $authController->register($_POST);
+});
+
 $router->post('/login', function () {
     $authController = new AuthController();
     $authController->login();
