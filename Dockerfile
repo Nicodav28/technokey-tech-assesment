@@ -6,7 +6,7 @@ RUN apt-get update && \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN rm /etc/nginx/conf.d/default.conf
+RUN [ -f /etc/nginx/conf.d/default.conf ] && rm /etc/nginx/conf.d/default.conf || true
 
 COPY ./public/nginx/default.conf /etc/nginx/conf.d/
 
