@@ -28,7 +28,3 @@ RUN docker-php-ext-configure pgsql --with-pgsql=/usr/local/pgsql \
     && docker-php-ext-install pdo pdo_pgsql pgsql
 
 EXPOSE 80
-
-RUN nginx -t
-
-CMD ["systemctl", "start", "nginx.service"]
