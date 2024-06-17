@@ -1,0 +1,118 @@
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    form {
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    form label {
+        font-weight: bold;
+    }
+
+    form input[type="date"],
+    form input[type="text"] {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        flex: 1;
+        margin-right: 10px;
+    }
+
+    form button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .cust-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ffffff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    table th,
+    table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    table th a {
+        text-decoration: none;
+        color: #333;
+    }
+
+    table th a:hover {
+        color: #007bff;
+    }
+
+    table tbody tr:hover {
+        background-color: #f0f0f0;
+    }
+
+    div.pagination {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    div.pagination a {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        color: #007bff;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        margin-right: 5px;
+    }
+
+    div.pagination a:hover {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .custom-toast {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1050;
+        width: 300px;
+    }

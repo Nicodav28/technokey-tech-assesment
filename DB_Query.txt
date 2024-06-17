@@ -1,0 +1,18 @@
+CREATE DATABASE technokey_asses;
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100) UNIQUE,
+    contrasena VARCHAR(255)
+);
+
+CREATE TABLE vuelos (
+    id SERIAL PRIMARY KEY,
+    codigo_avion VARCHAR(50) UNIQUE,
+    fecha DATE,
+    hora TIME,
+    tipo VARCHAR(50),vuelo directo
+    costo DECIMAL(10, 2),
+    destino VARCHAR(100)
+);
