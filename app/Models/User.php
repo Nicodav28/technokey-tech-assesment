@@ -14,6 +14,11 @@ class User
         $this->db = DB::getInstance();
     }
 
+    /**
+     * Retrieves a user record from the database by email.
+     * @param {string} $email - The email address of the user to find.
+     * @returns {array|null} Associative array of user data or null if not found.
+     */
     public function find($email)
     {
         $stmt = $this->db->prepare('SELECT * FROM usuarios WHERE email = :email');
@@ -21,6 +26,11 @@ class User
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Creates a new user with hashed password and inserts it into the 'usuarios' table.
+     * @param {object} $data - User data including 'nombre', 'email', and 'contrasena'.
+     * @returns {boolean} - True if the insertion was successful, false otherwise.
+     */
     public function create($data)
     {
         $hashedPassword = password_hash($data['contrasena'], PASSWORD_BCRYPT);

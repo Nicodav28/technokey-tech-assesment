@@ -14,9 +14,11 @@ class DB
 
     private function __construct()
     {
-        $dsn = "pgsql:host=localhost;port=5432;dbname=technokey_asses";
-        $username = 'postgres';
-        $password = '0000';
+        $config = include __DIR__ . '/../../config/database.php';
+
+        $dsn = "{$config['driver']}:host={$config['host']};port={$config['port']};dbname={$config['database']}";
+        $username = $config['username'];
+        $password = $config['password'];
 
         try {
             $this->connection = new PDO($dsn, $username, $password);
@@ -27,6 +29,12 @@ class DB
         }
     }
 
+    /**
+     * Returns the singleton instance of the class.
+     *
+     * If the instance does not already exist, it is created.
+     * @return self An instance of the current class.
+     */
     public static function getInstance(): self
     {
         if (!self::$instance) {
@@ -35,11 +43,12 @@ class DB
         return self::$instance;
     }
 
-    public function getConnection(): PDO
-    {
-        return $this->connection;
-    }
 
+    /**
+     * Prepares an SQL statement for execution and returns the statement object.
+     * @param {string} $sql The SQL query to prepare.
+     * @return {PDOStatement} The prepared statement.
+     */
     public function prepare(string $sql): PDOStatement
     {
         return $this->connection->prepare($sql);

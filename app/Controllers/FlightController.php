@@ -17,6 +17,11 @@ class FlightController
         $this->flight = $flight;
     }
 
+    /**
+     * Display the index page with a list of flights.
+     * Allows for filtering by date and type.
+     * Supports sorting and pagination.
+     */
     public function index()
     {
         $filters = [
@@ -31,15 +36,49 @@ class FlightController
         $offset = ($page - 1) * $limit;
 
         $flights = $this->flight->getFlights($filters, $sort, $order, $limit, $offset);
-        View::render('flights', ['flights' => $flights, 'limit' => $limit]);
+
+        $totalFlights = $this->flight->countTotalFlights($filters);
+
+        $totalPages = ceil($totalFlights / $limit);
+
+        View::render('flights', [
+            'flights' => $flights,
+            'limit' => $limit,
+            'sort' => $sort,
+            'order' => $order,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+        ]);
     }
 
+    /**
+     * Displays the flight details as JSON based on the passed ID.
+     * If no ID is passed, it sends a JSON response with an error message.
+     *
+     * @param {*} $id - The id of the flight to retrieve.
+     */
     public function show($id)
     {
-        $flight = $this->flight->getFlight($id);
-        View::render('flights', ['flight' => $flight]);
+
+        if (!$id) {
+            echo json_encode(['success' => false, 'message' => 'Id is a mandatory field.']);
+        }
+
+        $result = $this->flight->getFlight((int) $id);
+
+        header('Content-Type: application/json');
+        echo json_encode($result);
     }
 
+    /**
+     * Store a new flight record based on provided parameters.
+     *
+     * Validates the input fields before creating a flight. If validation fails,
+     * renders the flights view with an error message. On successful creation,
+     * redirects to the homepage.
+     *
+     * @param {array} $params - The parameters for the new flight, including plane code, flight date, hour, cost, destination, and type.
+     */
     public function store(array $params)
     {
         if (!General::validateEmptyFields($params)) {
@@ -51,40 +90,66 @@ class FlightController
             'codigo_avion' => $params['planeCode'],
             'fecha' => (string) $params['flightDate'],
             'hora' => $params['hour'],
-            'costo' => (float)$params['cost'],  // Asegurándose de que 'costo' sea un float
+            'costo' => (float)$params['cost'],
             'destino' => $params['destination'],
-            'tipo' => (int)$params['type'],  // Asegurándose de que 'tipo' sea un entero
+            'tipo' => (int)$params['type'],
         ];
 
-        $result = $this->flight->createFlight($data);
+        $this->flight->createFlight($data);
 
-        View::render('flights', ['flight' => $result]);
+        header('location: /');
     }
 
 
-    public function update($id, $params)
+    /**
+     * Updates the flight information based on the provided ID and JSON input.
+     * Validates the input fields before attempting to update the flight data.
+     * Responds with a JSON encoded success status and a relevant message.
+     *
+     * @param {string} $id The ID of the flight to be updated.
+     */
+    public function update($id)
     {
+        $json = file_get_contents('php://input');
+
+        $params = json_decode($json, true);
+
         if (!General::validateEmptyFields($params)) {
-            View::render('flights', ['error' => "All fields are required to create a new flight record."]);
+            echo json_encode(['success' => false, 'message' => 'Failed to update flight.']);
         }
 
         $data = [
-            'date' => $params['date'],
-            'type' => $params['type'],
-            'cost' => $params['cost'],
+            'codigo_avion' => $params['planeCode'],
+            'fecha' => $params['flightDate'],
+            'hora' => $params['hour'],
+            'tipo' => $params['type'],
+            'costo' => $params['cost'],
+            'destino' => $params['destination'],
         ];
 
         $result = $this->flight->updateFlight($id, $data);
 
-        // TODO: Redirigir y/o mostrar mensajes de resultado
-        View::render('flights', ['flight' => $result]);
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Flight updated successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to update flight.']);
+        }
     }
 
+    /**
+     * Destroys a flight record based on the given ID.
+     * Responds with a JSON-encoded success or failure message.
+     *
+     * @param {number} $id - The unique identifier of the flight to be deleted
+     */
     public function destroy($id)
     {
         $result = $this->flight->deleteFlight($id);
 
-        // TODO: Redirigir y/o mostrar mensajes de resultado
-        View::render('flights', ['flight' => $result]);
+        if ($result) {
+            echo json_encode(['success' => true, 'message' => 'Flight deleted successfully.']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to delete flight.']);
+        }
     }
 }
