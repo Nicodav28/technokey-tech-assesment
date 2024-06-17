@@ -2,6 +2,11 @@
 
 Este proyecto es una aplicación web desarrollada como parte de la evaluación técnica para Technokey. Proporciona funcionalidades relacionadas con la gestión de vuelos.
 
+## Tecnologías Utilizadas
+
+- PHP 8.0
+- PostgreSQL
+
 ## Instrucciones de Instalación
 
 1. **Instalación de Dependencias**
@@ -27,12 +32,20 @@ Este proyecto es una aplicación web desarrollada como parte de la evaluación t
        AllowOverride All
        Require all granted
    </Directory>
-Asegúrate de ajustar [web-server-path] para que coincida con la ruta real en tu entorno de servidor web.
-Inicio del Proyecto
+   ```
 
-Una vez que hayas instalado las dependencias con Composer y configurado Apache según las instrucciones anteriores, puedes iniciar el proyecto accediendo a través de tu servidor web local. Por ejemplo, si estás usando Apache localmente, accede a http://localhost/technokey-tech-assesment/public.
+   - Asegúrate de ajustar `[web-server-path]` para que coincida con la ruta real en tu entorno de servidor web.
 
-Uso
-Rutas Disponibles: El proyecto utiliza un sistema de rutas que puedes explorar para acceder a diferentes funcionalidades. Las rutas están definidas en el archivo routes/web.php.
+3. **Inicio del Proyecto**
 
-Funcionalidades: El proyecto incluye controladores para manejar diferentes aspectos como autenticación de usuarios, gestión de vuelos, entre otros. Explora los controladores en el directorio app/controllers para más detalles.
+   Una vez que hayas instalado las dependencias con Composer y configurado Apache según las instrucciones anteriores, puedes iniciar el proyecto accediendo a través de tu servidor web local. Por ejemplo, si estás usando Apache localmente, accede a `http://localhost/technokey-tech-assesment/public`.
+
+## Uso
+
+- **Rutas Disponibles:** El proyecto utiliza un sistema de rutas que puedes explorar para acceder a diferentes funcionalidades. Las rutas están definidas en el archivo `routes/web.php`.
+
+- **Controladores y Modelos:** El directorio `app/controllers` contiene los controladores que manejan la lógica de la aplicación, mientras que `app/models` contiene los modelos que interactúan con la base de datos PostgreSQL.
+
+- **Middleware:** La carpeta `app/middleware` contiene los middleware utilizados para procesar las solicitudes antes de que lleguen a los controladores.
+
+- **Configuración:** El directorio `config` contiene archivos de configuración importantes para la aplicación.

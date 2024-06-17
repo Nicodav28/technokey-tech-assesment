@@ -1,0 +1,241 @@
+Folder PATH listing
+Volume serial number is 3E8B-EF43
+C:\LARAGON\WWW\TECHNOKEY-TECH-ASSESMENT
+¦   .env
+¦   .env.example
+¦   .gitignore
+¦   composer.json
+¦   composer.lock
+¦   DB_Query.txt
+¦   docker-compose.yml
+¦   Dockerfile
+¦   README.md
+¦   tree.txt
+¦   
++---.github
+¦   +---workflows
+¦           prod-deploy.yml
+¦           
++---app
+¦   +---controllers
+¦   ¦       AuthController.php
+¦   ¦       FlightController.php
+¦   ¦       
+¦   +---helpers
+¦   ¦       DB.php
+¦   ¦       View.php
+¦   ¦       
+¦   +---middleware
+¦   ¦       AuthMiddleware.php
+¦   ¦       SanitizeMiddleware.php
+¦   ¦       
+¦   +---models
+¦   ¦       Flight.php
+¦   ¦       User.php
+¦   ¦       
+¦   +---utils
+¦   ¦       general.php
+¦   ¦       
+¦   +---views
+¦       ¦   flights.php
+¦       ¦   login.php
+¦       ¦   register.php
+¦       ¦   
+¦       +---layouts
+¦               layout.php
+¦               modales.php
+¦               
++---config
+¦       database.php
+¦       
++---public
+¦   ¦   .htaccess
+¦   ¦   index.php
+¦   ¦   
+¦   +---css
+¦   ¦       bootstrap.min.css
+¦   ¦       flights.css
+¦   ¦       login.css
+¦   ¦       register.css
+¦   ¦       
+¦   +---js
+¦           bootstrap.min.js
+¦           main.js
+¦           
++---routes
+¦       web.php
+¦       
++---vendor
+    ¦   autoload.php
+    ¦   
+    +---bramus
+    ¦   +---router
+    ¦       ¦   .gitignore
+    ¦       ¦   .php_cs.dist
+    ¦       ¦   CHANGELOG.md
+    ¦       ¦   composer.json
+    ¦       ¦   LICENSE
+    ¦       ¦   phpunit.xml.dist
+    ¦       ¦   README.md
+    ¦       ¦   
+    ¦       +---.github
+    ¦       ¦   +---workflows
+    ¦       ¦           CI.yml
+    ¦       ¦           
+    ¦       +---demo
+    ¦       ¦       .htaccess
+    ¦       ¦       index.php
+    ¦       ¦       
+    ¦       +---demo-multilang
+    ¦       ¦       .htaccess
+    ¦       ¦       index.php
+    ¦       ¦       
+    ¦       +---src
+    ¦       ¦   +---Bramus
+    ¦       ¦       +---Router
+    ¦       ¦               Router.php
+    ¦       ¦               
+    ¦       +---tests
+    ¦               bootstrap.php
+    ¦               RouterTest.php
+    ¦               
+    +---composer
+    ¦       autoload_classmap.php
+    ¦       autoload_files.php
+    ¦       autoload_namespaces.php
+    ¦       autoload_psr4.php
+    ¦       autoload_real.php
+    ¦       autoload_static.php
+    ¦       ClassLoader.php
+    ¦       installed.json
+    ¦       installed.php
+    ¦       InstalledVersions.php
+    ¦       LICENSE
+    ¦       platform_check.php
+    ¦       
+    +---graham-campbell
+    ¦   +---result-type
+    ¦       ¦   composer.json
+    ¦       ¦   LICENSE
+    ¦       ¦   
+    ¦       +---src
+    ¦               Error.php
+    ¦               Result.php
+    ¦               Success.php
+    ¦               
+    +---phpoption
+    ¦   +---phpoption
+    ¦       ¦   composer.json
+    ¦       ¦   LICENSE
+    ¦       ¦   
+    ¦       +---src
+    ¦           +---PhpOption
+    ¦                   LazyOption.php
+    ¦                   None.php
+    ¦                   Option.php
+    ¦                   Some.php
+    ¦                   
+    +---symfony
+    ¦   +---polyfill-ctype
+    ¦   ¦       bootstrap.php
+    ¦   ¦       bootstrap80.php
+    ¦   ¦       composer.json
+    ¦   ¦       Ctype.php
+    ¦   ¦       LICENSE
+    ¦   ¦       README.md
+    ¦   ¦       
+    ¦   +---polyfill-mbstring
+    ¦   ¦   ¦   bootstrap.php
+    ¦   ¦   ¦   bootstrap80.php
+    ¦   ¦   ¦   composer.json
+    ¦   ¦   ¦   LICENSE
+    ¦   ¦   ¦   Mbstring.php
+    ¦   ¦   ¦   README.md
+    ¦   ¦   ¦   
+    ¦   ¦   +---Resources
+    ¦   ¦       +---unidata
+    ¦   ¦               caseFolding.php
+    ¦   ¦               lowerCase.php
+    ¦   ¦               titleCaseRegexp.php
+    ¦   ¦               upperCase.php
+    ¦   ¦               
+    ¦   +---polyfill-php80
+    ¦       ¦   bootstrap.php
+    ¦       ¦   composer.json
+    ¦       ¦   LICENSE
+    ¦       ¦   Php80.php
+    ¦       ¦   PhpToken.php
+    ¦       ¦   README.md
+    ¦       ¦   
+    ¦       +---Resources
+    ¦           +---stubs
+    ¦                   Attribute.php
+    ¦                   PhpToken.php
+    ¦                   Stringable.php
+    ¦                   UnhandledMatchError.php
+    ¦                   ValueError.php
+    ¦                   
+    +---vlucas
+        +---phpdotenv
+            ¦   composer.json
+            ¦   LICENSE
+            ¦   
+            +---src
+                ¦   Dotenv.php
+                ¦   Validator.php
+                ¦   
+                +---Exception
+                ¦       ExceptionInterface.php
+                ¦       InvalidEncodingException.php
+                ¦       InvalidFileException.php
+                ¦       InvalidPathException.php
+                ¦       ValidationException.php
+                ¦       
+                +---Loader
+                ¦       Loader.php
+                ¦       LoaderInterface.php
+                ¦       Resolver.php
+                ¦       
+                +---Parser
+                ¦       Entry.php
+                ¦       EntryParser.php
+                ¦       Lexer.php
+                ¦       Lines.php
+                ¦       Parser.php
+                ¦       ParserInterface.php
+                ¦       Value.php
+                ¦       
+                +---Repository
+                ¦   ¦   AdapterRepository.php
+                ¦   ¦   RepositoryBuilder.php
+                ¦   ¦   RepositoryInterface.php
+                ¦   ¦   
+                ¦   +---Adapter
+                ¦           AdapterInterface.php
+                ¦           ApacheAdapter.php
+                ¦           ArrayAdapter.php
+                ¦           EnvConstAdapter.php
+                ¦           GuardedWriter.php
+                ¦           ImmutableWriter.php
+                ¦           MultiReader.php
+                ¦           MultiWriter.php
+                ¦           PutenvAdapter.php
+                ¦           ReaderInterface.php
+                ¦           ReplacingWriter.php
+                ¦           ServerConstAdapter.php
+                ¦           WriterInterface.php
+                ¦           
+                +---Store
+                ¦   ¦   FileStore.php
+                ¦   ¦   StoreBuilder.php
+                ¦   ¦   StoreInterface.php
+                ¦   ¦   StringStore.php
+                ¦   ¦   
+                ¦   +---File
+                ¦           Paths.php
+                ¦           Reader.php
+                ¦           
+                +---Util
+                        Regex.php
+                        Str.php
+                        

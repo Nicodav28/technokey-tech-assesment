@@ -1,0 +1,35 @@
+name: Production Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build and Push Docker Image
+        env:
+          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+        run: |
+          docker build -t your_image_tag .
+          docker tag your_image_tag your_dockerhub_username/your_image_tag:latest
+          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_ACCESS_TOKEN
+          docker push your_dockerhub_username/your_image_tag:latest
+
+      - name: SSH into Production Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: your_production_server_ip
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d
