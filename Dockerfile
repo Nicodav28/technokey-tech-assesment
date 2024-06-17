@@ -4,6 +4,24 @@ RUN apt-get update && \
     apt-get install -y \
     nginx \
     libpq-dev \
+    libjpeg-dev \
+    libpng-dev \
+    libfreetype6-dev \
+    libicu-dev \
+    libxml2-dev \
+    libssl-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) \
+    curl \
+    fileinfo \
+    gd \
+    intl \
+    mbstring \
+    exif \
+    mysqli \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 RUN [ -f /etc/nginx/conf.d/default.conf ] && rm /etc/nginx/conf.d/default.conf || true
@@ -13,21 +31,6 @@ COPY ./public/nginx/default.conf /etc/nginx/conf.d/
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
-
-RUN set -eux; \
-    { \
-    echo 'extension=curl'; \
-    echo 'extension=fileinfo'; \
-    echo 'extension=gd'; \
-    echo 'extension=intl'; \
-    echo 'extension=mbstring'; \
-    echo 'extension=exif'; \
-    echo 'extension=mysqli'; \
-    echo 'extension=openssl'; \
-    echo 'extension=pdo_mysql'; \
-    echo 'extension=pdo_pgsql'; \
-    echo 'extension=pgsql'; \
-    } > /usr/local/etc/php/conf.d/docker-php-ext-custom.ini
 
 COPY . .
 
