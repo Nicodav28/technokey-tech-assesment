@@ -47,7 +47,7 @@ $router->post('/', function () {
 
 $router->put('/{id}', function ($id) {
     $flightController = new FlightController(new Flight());
-    $flightController->update($id, $_POST);
+    $flightController->update($id);
 });
 
 $router->delete('/{id}', function ($id) {
