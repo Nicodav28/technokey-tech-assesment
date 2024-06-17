@@ -1,24 +1,21 @@
-FROM php:8.1-fpm-alpine
+FROM php:8.0-fpm
 
-RUN apk --no-cache add \
+RUN apt-get update && \
+    apt-get install -y \
     nginx \
-    supervisor \
-    postgresql-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
 
-COPY ./docker/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/default.conf /etc/nginx/conf.d/default.conf
 
-COPY ./docker/php.ini /usr/local/etc/php/php.ini
-
-COPY ./docker/supervisord.conf /etc/supervisord.conf
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 WORKDIR /var/www/html
 
 COPY . .
 
-RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
+RUN composer install --no-dev --optimize-autoloader
 
 EXPOSE 80
 
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
+CMD service nginx start && php-fpm

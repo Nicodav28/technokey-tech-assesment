@@ -13,23 +13,68 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Build and Push Docker Image
-        env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_ACCESS_TOKEN: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      - name: Create .env file
         run: |
-          docker build -t your_image_tag .
-          docker tag your_image_tag your_dockerhub_username/your_image_tag:latest
-          docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_ACCESS_TOKEN
-          docker push your_dockerhub_username/your_image_tag:latest
+          echo "DATABASE_HOST=${{ secrets.DC_BOT_TOKEN }}" >> .env
+          echo "DATABASE_USER=${{ secrets.DC_BOT_PUBLIC_KEY }}" >> .env
+          echo "DATABASE_NAME=${{ secrets.DC_APP_ID }}" >> .env
+          echo "DATABASE_PASSWORD=${{ secrets.DC_BOT_SECRET_KEY }}" >> .env
 
-      - name: SSH into Production Server
+      - name: Validate Files
+        run: ls -la
+
+      - name: Create Nginx Config File
+        run: |
+          echo 'server {' > default.conf
+          echo '    listen 80;' >> default.conf
+          echo '    server_name localhost;' >> default.conf
+          echo '' >> default.conf
+          echo '    root /var/www/html/public;' >> default.conf
+          echo '    index index.php index.html index.htm;' >> default.conf
+          echo '' >> default.conf
+          echo '    location / {' >> default.conf
+          echo '        try_files $uri $uri/ /index.php?$query_string;' >> default.conf
+          echo '    }' >> default.conf
+          echo '' >> default.conf
+          echo '    location ~ \.php$ {' >> default.conf
+          echo '        include fastcgi_params;' >> default.conf
+          echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> default.conf
+          echo '        fastcgi_pass php-fpm:9000;' >> default.conf
+          echo '        fastcgi_index index.php;' >> default.conf
+          echo '    }' >> default.conf
+          echo '' >> default.conf
+          echo '    location ~ /\.ht {' >> default.conf
+          echo '        deny all;' >> default.conf
+          echo '    }' >> default.conf
+          echo '}' >> default.conf
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Container Build and Push
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/technokey-asses-img:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/technokey-asses-img:latest
+
+      - name: Deploy to VPS
         uses: appleboy/ssh-action@master
         with:
-          host: your_production_server_ip
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_PRIV_KEY }}
+          passphrase: ${{ secrets.VPS_SSH_PASSPHRASE }}
           script: |
-            docker-compose pull
-            docker-compose down
-            docker-compose up -d
+            docker pull ${{ secrets.DOCKER_USERNAME }}/technokey-asses-img:latest
+            docker stop technokey-asses-container
+            docker rm technokey-asses-container
+            docker run -d --name technokey-asses-container nicodav28/technokey-asses-img:latest
+
+            if docker ps | grep technokey-asses-container; then
+              echo "Container is running successfully"
+            else
+              echo "Failed to start container"
+              exit 1
+            fi
+
+      - name: Prune System
+        run: "echo y | docker system prune -a"
