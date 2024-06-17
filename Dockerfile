@@ -3,25 +3,11 @@ FROM php:8.1-fpm
 RUN apt-get update && \
     apt-get install -y \
     nginx \
-    libpq-dev \
-    libjpeg-dev \
-    libpng-dev \
-    libfreetype6-dev \
-    libicu-dev \
-    libxml2-dev \
-    libssl-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install -j$(nproc) \
-    curl \
-    fileinfo \
-    gd \
-    intl \
-    mbstring \
-    exif \
-    mysqli \
-    pdo_mysql \
-    pdo_pgsql \
-    pgsql \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN apt-get install -y libpq-dev \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql \
     && rm -rf /var/lib/apt/lists/*
 
 RUN [ -f /etc/nginx/conf.d/default.conf ] && rm /etc/nginx/conf.d/default.conf || true

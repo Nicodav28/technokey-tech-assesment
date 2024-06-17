@@ -46,8 +46,14 @@ jobs:
           echo '    }' >> public/nginx/default.conf
           echo '}' >> public/nginx/default.conf
 
-      - name: Validate Files
-        run: ls -la
+      - name: Install tree
+        run: sudo apt-get update && sudo apt-get install -y tree
+
+      - name: Show directory tree
+        run: tree
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
@@ -68,7 +74,7 @@ jobs:
             docker pull ${{ secrets.DOCKER_USERNAME }}/technokey-asses-img:latest
             docker stop technokey-asses-container
             docker rm technokey-asses-container
-            docker run -d --name technokey-asses-container nicodav28/technokey-asses-img:latest
+            docker run -d --name technokey-asses-container -p 8002:80 nicodav28/technokey-asses-img:latest
 
             if docker ps | grep technokey-asses-container; then
               echo "Container is running successfully"
