@@ -20,33 +20,34 @@ jobs:
           echo "DATABASE_NAME=${{ secrets.DC_APP_ID }}" >> .env
           echo "DATABASE_PASSWORD=${{ secrets.DC_BOT_SECRET_KEY }}" >> .env
 
-      - name: Validate Files
-        run: ls -la
-
       - name: Create Nginx Config File
         run: |
-          echo 'server {' > default.conf
-          echo '    listen 80;' >> default.conf
-          echo '    server_name localhost;' >> default.conf
-          echo '' >> default.conf
-          echo '    root /var/www/html/public;' >> default.conf
-          echo '    index index.php index.html index.htm;' >> default.conf
-          echo '' >> default.conf
-          echo '    location / {' >> default.conf
-          echo '        try_files $uri $uri/ /index.php?$query_string;' >> default.conf
-          echo '    }' >> default.conf
-          echo '' >> default.conf
-          echo '    location ~ \.php$ {' >> default.conf
-          echo '        include fastcgi_params;' >> default.conf
-          echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> default.conf
-          echo '        fastcgi_pass php-fpm:9000;' >> default.conf
-          echo '        fastcgi_index index.php;' >> default.conf
-          echo '    }' >> default.conf
-          echo '' >> default.conf
-          echo '    location ~ /\.ht {' >> default.conf
-          echo '        deny all;' >> default.conf
-          echo '    }' >> default.conf
-          echo '}' >> default.conf
+          mkdir -p public/nginx  # Asegúrate de crear el directorio si no existe
+          echo 'server {' > public/nginx/default.conf
+          echo '    listen 80;' >> public/nginx/default.conf
+          echo '    server_name localhost;' >> public/nginx/default.conf
+          echo '' >> public/nginx/default.conf
+          echo '    root /var/www/html/public;' >> public/nginx/default.conf
+          echo '    index index.php index.html index.htm;' >> public/nginx/default.conf
+          echo '' >> public/nginx/default.conf
+          echo '    location / {' >> public/nginx/default.conf
+          echo '        try_files $uri $uri/ /index.php?$query_string;' >> public/nginx/default.conf
+          echo '    }' >> public/nginx/default.conf
+          echo '' >> public/nginx/default.conf
+          echo '    location ~ \.php$ {' >> public/nginx/default.conf
+          echo '        include fastcgi_params;' >> public/nginx/default.conf
+          echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> public/nginx/default.conf
+          echo '        fastcgi_pass php-fpm:9000;' >> public/nginx/default.conf
+          echo '        fastcgi_index index.php;' >> public/nginx/default.conf
+          echo '    }' >> public/nginx/default.conf
+          echo '' >> public/nginx/default.conf
+          echo '    location ~ /\.ht {' >> public/nginx/default.conf
+          echo '        deny all;' >> public/nginx/default.conf
+          echo '    }' >> public/nginx/default.conf
+          echo '}' >> public/nginx/default.conf
+
+      - name: Validate Files
+        run: ls -la
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
