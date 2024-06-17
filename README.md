@@ -34,9 +34,27 @@ Este proyecto es una aplicación web desarrollada como parte de la evaluación t
    </Directory>
    ```
 
-   - Asegúrate de ajustar `[web-server-path]` para que coincida con la ruta real en tu entorno de servidor web.
+   Asegúrate de ajustar `[web-server-path]` para que coincida con la ruta real en tu entorno de servidor web.
+    Para agregar la información sobre la configuración de la conexión a la base de datos en un archivo `.env` y asegurar que el usuario que clone el repositorio cree este archivo, puedes seguir estos pasos adicionales:
 
-3. **Inicio del Proyecto**
+3. **Configuración de la Base de Datos**
+    
+    Este proyecto requiere una conexión a una base de datos PostgreSQL. Asegúrate de crear un archivo `.env` en el directorio raíz del proyecto con la siguiente configuración, reemplazando los valores según tu entorno local:
+    
+    ```dotenv
+    # Configuración de conexión a la base de datos PostgreSQL
+    DB_CONNECTION=pgsql
+    DB_HOST=127.0.0.1
+    DB_PORT=5432
+    DB_DATABASE=nombre_basedatos
+    DB_USERNAME=usuario_basedatos
+    DB_PASSWORD=contraseña_basedatos
+    ```
+    
+    **Notas Importantes**
+    Asegúrate de tener PostgreSQL instalado y configurado correctamente en tu sistema y de haber creado la BD correspondiente con ayuda del archivo que se haya en este repositorio "DB_Query.txt".
+    
+4. **Inicio del Proyecto**
 
    Una vez que hayas instalado las dependencias con Composer y configurado Apache según las instrucciones anteriores, puedes iniciar el proyecto accediendo a través de tu servidor web local. Por ejemplo, si estás usando Apache localmente, accede a `http://localhost/technokey-tech-assesment/public`.
 
