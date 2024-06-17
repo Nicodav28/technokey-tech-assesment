@@ -37,7 +37,7 @@ jobs:
           echo '    location ~ \.php$ {' >> public/nginx/default.conf
           echo '        include fastcgi_params;' >> public/nginx/default.conf
           echo '        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;' >> public/nginx/default.conf
-          echo '        fastcgi_pass php-fpm:9000;' >> public/nginx/default.conf
+          echo '        fastcgi_pass unix:/var/run/php/php-fpm.sock;' >> public/nginx/default.conf
           echo '        fastcgi_index index.php;' >> public/nginx/default.conf
           echo '    }' >> public/nginx/default.conf
           echo '' >> public/nginx/default.conf
