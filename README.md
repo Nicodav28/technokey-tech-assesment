@@ -56,7 +56,7 @@ Este proyecto es una aplicación web desarrollada como parte de la evaluación t
     
 4. **Inicio del Proyecto**
 
-   Una vez que hayas instalado las dependencias con Composer y configurado Apache según las instrucciones anteriores, puedes iniciar el proyecto accediendo a través de tu servidor web local. Por ejemplo, si estás usando Apache localmente, accede a `http://localhost/technokey-tech-assesment/public`.
+   Una vez que hayas instalado las dependencias con Composer y configurado Apache según las instrucciones anteriores, puedes iniciar el proyecto accediendo a través de tu servidor web local. Por ejemplo, si estás usando Apache localmente, accede a `http://localhost/technokey-tech-assesment/`.
 
 ## Uso
 
