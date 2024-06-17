@@ -18,11 +18,12 @@
     "autoload": {
         "psr-4": {
             "App\\": "app",
-            "App\\Utils": "app/utils",
+            "App\\Utils\\": "app/utils",
             "App\\Middleware\\": "app/middleware",
             "App\\Controllers\\": "app/controllers/",
             "App\\Models\\": "app/models/",
-            "App\\Views\\": "app/views/"
+            "App\\Views\\": "app/views/",
+            "App\\Helpers\\": "app/helpers/"
         }
     }
 }
